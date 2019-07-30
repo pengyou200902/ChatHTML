@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta http-equiv="Content-Type" content="text/html, charset=UTF-8" />
+    <title>Medical Chat</title>
+</head>
+<body id="chat-body">
+    <div id="webchat"></div>
+    <h1>I'm in the lower right corner.</h1>
+    <h1>If not, it means connection error.</h1>
+    <h1>You can check out the browser console.</h1>
+</body>
+<script src="js/jquery-1.10.2.js"></script>
+<script src="js/webchat-0.5.8.js"></script>
+<script>
+    WebChat.default.init({
+        selector: "#webchat",
+        initPayload: "/first",
+        interval: 1000, // 1000 ms between each message
+        customData: {"sender_id": "123"}, // arbitrary custom data. Stay minimal as this will be added to the socket
+        socketUrl: "http://localhost:5000",
+        socketPath: "/socket.io/",
+        title: "Medical",
+        subtitle: "Doctor Friende",
+        inputTextFieldHint: "Type a message...",
+        connectingText: "Waiting for server...",
+        hideWhenNotConnected: true,
+        fullScreenMode: false,
+        profileAvatar: "assets/img_avatar.png",
+        // openLauncherImage: 'myCustomOpenImage.png',
+        // closeLauncherImage: 'myCustomCloseImage.png',
+        params: {
+            images: {
+                dims: {
+                    width: 300,
+                    height: 200,
+                }
+            },
+            storage: "session"
+        }
+    })
+</script>
+</html>
