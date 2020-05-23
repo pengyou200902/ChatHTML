@@ -1,43 +1,111 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-    <meta http-equiv="Content-Type" content="text/html, charset=UTF-8" />
+    <meta charset="UTF-8">
     <title>Medical Chat</title>
 </head>
 <body id="chat-body">
     <div id="webchat"></div>
-    <h1>I'm in the lower right corner.</h1>
-    <h1>If not, it means connection error.</h1>
-    <h1>You can check out the browser console.</h1>
+    <h2>changelog: 2020.05.20</h2>
+    <h2>
+        <p>我在右下角。</p>
+        <p>I'm in the lower right corner.</p>
+    </h2>
+    <h2>
+        <p>如果不能输入消息，请看浏览器控制台是否报错。</p>
+        <p>If you cannot input a message, check the browser console.</p>
+    </h2>
+    <!-- <h1>If not, it means connection error.</h1> -->
+    <!-- <h1>You can check out the browser console.</h1> -->
+
+    <!--    <input id="user-send" type="text" value="头痛怎么治">-->
+
+<!--    <button onclick="sendMsg($('#user-send').val());">发送</button>-->
 </body>
-<script src="js/jquery-1.10.2.js"></script>
-<script src="js/webchat-0.5.8.js"></script>
+<script src="./js/webchat-latest.js"></script>
+<script src="./js/jquery-1.10.2.js"></script>
 <script>
     WebChat.default.init({
-        selector: "#webchat",
-        initPayload: "/first",
-        interval: 1000, // 1000 ms between each message
-        customData: {"sender_id": "123"}, // arbitrary custom data. Stay minimal as this will be added to the socket
-        socketUrl: "http://localhost:5000",
-        socketPath: "/socket.io/",
-        title: "Medical",
-        subtitle: "Doctor Friende",
-        inputTextFieldHint: "Type a message...",
-        connectingText: "Waiting for server...",
-        hideWhenNotConnected: true,
-        fullScreenMode: false,
-        profileAvatar: "assets/img_avatar.png",
-        // openLauncherImage: 'myCustomOpenImage.png',
-        // closeLauncherImage: 'myCustomCloseImage.png',
-        params: {
-            images: {
-                dims: {
-                    width: 300,
-                    height: 200,
-                }
-            },
-            storage: "session"
-        }
+      selector: '#webchat',
+      initPayload: '/first',
+      interval: 1000, // 1000 ms between each message
+      customData: { from_user_id: 1 }, // arbitrary custom data. Stay minimal as this will be added to the socket
+      socketUrl: 'http://localhost:5000',
+      socketPath: '/mysocket.io/',
+      title: '自助医疗问答',
+      subtitle: 'Doctor Friende',
+      inputTextFieldHint: '输入一条消息...',
+      connectingText: '等待服务器...',
+      hideWhenNotConnected: false,
+      fullScreenMode: false,
+      profileAvatar: './assets/img_avatar.png',
+      // openLauncherImage: 'myCustomOpenImage.png',
+      // closeLauncherImage: 'myCustomCloseImage.png',
+      params: {
+        images: {
+          dims: {
+            width: 300,
+            height: 200
+          }
+        },
+        storage: 'session'
+      }
     })
 </script>
+<!--<script>-->
+<!--    // '{"q":"我朋友头痛怎么治", "project": "medical", "model": "model_20190723-153130"}'-->
+
+<!--    $(document).ready(function () {-->
+<!--       sendMsg('/first');-->
+<!--    });-->
+
+<!--    function sendMsg(message) {-->
+<!--        // let project = "medical";-->
+<!--        // let model = "model_20190723-153130";-->
+<!--        let text = message;-->
+<!--        let data = JSON.stringify({-->
+<!--            // project,-->
+<!--            // model,-->
+<!--            "message": text-->
+<!--        });-->
+<!--        console.log(data);-->
+<!--        let p = '<span><p>You&nbsp;>>>&nbsp;' + message + '</p></span>';-->
+<!--        document.getElementById('chat-body').innerHTML += p;-->
+<!--        $.ajax({-->
+<!--            url: "c",-->
+<!--            // url: "http://localhost:5000/model/parse",-->
+<!--            // url: "http://localhost:5055/webhook",-->
+<!--            type: "post",-->
+<!--            data: data,-->
+<!--            dataType: "json",-->
+<!--            contentType: "application/json",-->
+<!--            success: function (modelParseData) {-->
+<!--                console.log(modelParseData);-->
+<!--                // let p = '<span><p>' + JSON.stringify(data.intent) + '</p><p>' + JSON.stringify(data.entities) + '</p></span>';-->
+<!--                // $.ajax({-->
+<!--                //     url: "http://localhost:5055/webhook",-->
+<!--                //     type: "post",-->
+<!--                //     data: modelParseData,-->
+<!--                //     dataType: "json",-->
+<!--                //     contentType: "application/json",-->
+<!--                //     success: function (botMsg) {-->
+<!--                //         let p = '<span><p>' + JSON.stringify(botMsg) + '</p></span>';-->
+<!--                //         document.getElementById('chat-body').innerHTML += p;-->
+<!--                //     },-->
+<!--                //     error: function (result) {-->
+<!--                //         console.log("webhook error:\n" + result);-->
+<!--                //     }-->
+<!--                // });-->
+<!--                p = '';-->
+<!--                for (let i = 0; i < modelParseData.length; i++) {-->
+<!--                    p += '<span><p>Bot&nbsp;>>>&nbsp;' + modelParseData[i]["text"] + '</p></span>';-->
+<!--                }-->
+<!--                document.getElementById('chat-body').innerHTML += p;-->
+<!--            },-->
+<!--            error: function (result) {-->
+<!--                console.log(result);-->
+<!--            }-->
+<!--        })-->
+<!--    }-->
+<!--</script>-->
 </html>
